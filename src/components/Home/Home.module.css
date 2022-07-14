@@ -1,0 +1,47 @@
+.home-container {
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-image: url("../../assets/png/home-page-bg.png");
+  background-size: 100% 100%;
+
+  position: relative;
+}
+
+.connect-wallet {
+  z-index: 1200;
+
+  position: absolute;
+
+  right: 5%;
+  top: 20px;
+
+  width: 180px;
+
+  padding: 10px;
+
+  background: rgba(255, 255, 81, 0.1);
+  border: 1px solid rgba(81, 84, 112, 0.7);
+  backdrop-filter: blur(6px);
+
+  border-radius: 6px;
+
+  color: #fff;
+
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .home-container {
+    background-image: none;
+    background-color: #000;
+
+    height: 100%;
+    min-height: 100vh;
+
+    padding-bottom: 20px;
+  }
+}
