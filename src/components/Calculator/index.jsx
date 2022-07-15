@@ -6,7 +6,7 @@ import binanceIcon from "../../assets/png/binanceIcon.png";
 import CalculatorConvertationItem from "./CalculatorConvertationItem";
 import Dropdown from "../Dropdown";
 
-const Calculator = () => {
+const Calculator = ({showModal}) => {
   const [isInputsReverted, setIsInputsReverted] = useState(false);
   const options = [
     { value: "ETH", label: "Ethereum", icon: ethIcon },
@@ -16,7 +16,7 @@ const Calculator = () => {
   const [dropdownOneImg, setDropdownOneImg] = useState("ethIcon");
   const [dropdownTwoImg, setDropdownTwoImg] = useState("inchIcon");
 
-  const [isWalletConnected, setIsWalletConnected] = useState(false);
+  const [isWalletConnected] = useState(false);
 
   const dropdownHandlerOne = (selectedOption) => {
     if (selectedOption.value === "1INCH") {
@@ -152,14 +152,14 @@ const Calculator = () => {
       {!isWalletConnected ? (
         <button
           className={classes["calc-button"]}
-          onClick={() => setIsWalletConnected(true)}
+          onClick={() => showModal()}
         >
           CONNECT WALLET
         </button>
       ) : (
         <button
           className={classes["calc-button"]}
-          onClick={() => setIsWalletConnected(false)}
+          onClick={() => {}}
         >
           SWAP
         </button>
