@@ -3,7 +3,7 @@
 
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 
   background-image: url("../../assets/png/home-page-bg.png");
   background-size: 100% 100%;
@@ -11,14 +11,23 @@
   position: relative;
 }
 
-.connect-wallet {
+.header {
   z-index: 1200;
 
   position: absolute;
 
-  right: 5%;
-  top: 20px;
+  top: 2.5vh;
+  left: 50%;
 
+  width: 90%;
+
+  display: flex;
+  justify-content: space-between;
+
+  transform: translateX(-50%);
+}
+
+.connect-wallet {
   width: 180px;
 
   padding: 10px;
@@ -34,6 +43,18 @@
   cursor: pointer;
 }
 
+.left-side-coins,
+.right-side-coins {
+  width: 20vw;
+
+  margin-top: 25vh;
+}
+
+.left-side-coins > img,
+.right-side-coins > img {
+  width: 80%;
+}
+
 @media (max-width: 768px) {
   .home-container {
     background-image: none;
@@ -43,5 +64,10 @@
     min-height: 100vh;
 
     padding-bottom: 20px;
+  }
+
+  .left-side-coins,
+  .right-side-coins {
+    display: none;
   }
 }
