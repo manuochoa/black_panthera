@@ -253,14 +253,7 @@ const Calculator = ({
 
       let tx;
       let deadline = Date.now() + 1000 * 60 * 10;
-      console.log({
-        exchangeType,
-        isInputsReverted,
-        amountOutMin,
-        path,
-        userAddress,
-        deadline,
-      });
+      let gasLimit = 300000;
 
       if (exchangeType === "ETHtoToken") {
         tx =
@@ -269,7 +262,7 @@ const Calculator = ({
             path,
             userAddress,
             deadline,
-            { value: amountIn }
+            { value: amountIn, gasLimit }
           );
       } else if (exchangeType === "tokenToEth") {
         tx =
@@ -278,7 +271,8 @@ const Calculator = ({
             amountOutMin,
             path,
             userAddress,
-            deadline
+            deadline,
+            { gasLimit }
           );
       } else if (exchangeType === "tokenToToken") {
         if (path[0] !== WETH && path[1] !== WETH) {
@@ -291,7 +285,8 @@ const Calculator = ({
             amountOutMin,
             path,
             userAddress,
-            deadline
+            deadline,
+            { gasLimit }
           );
       }
 
