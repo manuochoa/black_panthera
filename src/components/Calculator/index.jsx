@@ -468,7 +468,7 @@ const Calculator = ({
             >
               <div className={classes["line-left"]} />
               <div className={classes["balance-container"]}>
-                <p>You Recieve</p>
+                <p>You Send</p>
                 <p> Balance: {truncate(tokenOut.balance, 6)}</p>
               </div>
               <div className={classes["calc-input-container"]}>
@@ -527,7 +527,7 @@ const Calculator = ({
             >
               <div className={classes["line-right"]} />
               <div className={classes["balance-container"]}>
-                <p>You Send</p>
+                <p>You Recieve</p>
                 <p>Balance: {truncate(tokenIn.balance, 6)} </p>
               </div>
               <div className={classes["calc-input-container"]}>
