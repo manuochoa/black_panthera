@@ -3,6 +3,7 @@ import classesIndex from "./index.module.css";
 import classesCustom from "./custom.module.css";
 import Polygon from "../../assets/png/polygon.png";
 import ArrowBottom from "../../assets/png/arrow-bottom.png";
+import { chainsList } from "../../common/chainsList";
 
 const Common = ({ defaultValue, unknownNetwork, chainId, getValue }) => {
   const logos = {
@@ -32,10 +33,32 @@ const Common = ({ defaultValue, unknownNetwork, chainId, getValue }) => {
 
     if (Number(chainId) !== Number(chain)) {
       console.log("change chain");
-      await window.ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: toHex(chain) }],
-      });
+      try {
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: toHex(chain) }],
+        });
+      } catch (error) {
+        console.log(error);
+        if (Number(error.code) === 4902) {
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [
+              {
+                chainId: toHex(chain), // A 0x-prefixed hexadecimal string
+                chainName: chainsList[chain].name,
+                nativeCurrency: {
+                  name: chainsList[chain].symbol,
+                  symbol: chainsList[chain].symbol, // 2-6 characters long
+                  decimals: chainsList[chain].decimals,
+                },
+                rpcUrls: chainsList[chain].rpc,
+                blockExplorerUrls: [chainsList[chain].explorers],
+              },
+            ],
+          });
+        }
+      }
     }
   };
 
