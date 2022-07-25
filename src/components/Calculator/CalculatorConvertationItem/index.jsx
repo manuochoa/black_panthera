@@ -6,20 +6,24 @@ const CalculatorConvertationItem = ({
   options,
   defaultOption,
   dropdownImg,
+  dropdownHandler,
   setImg,
   children,
+  chainId,
 }) => {
   return (
     <div className={classes["convertation-item"]}>
       <div>
         <div className={classes["convertation-title"]}>
-          <img src={setImg(dropdownImg)} alt="dropdown logo" />
+          <img src={dropdownImg} alt="dropdown logo" />
           <span className={classes["text"]}>{defaultOption.value}</span>
         </div>
         <div className={classes["dropdown-wrapper"]}>
           <Dropdown.Custom
+            dropdownHandler={dropdownHandler}
             options={options}
             defaultValue={defaultOption}
+            chainId={chainId}
           />
         </div>
       </div>

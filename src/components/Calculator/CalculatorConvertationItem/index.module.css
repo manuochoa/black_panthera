@@ -23,6 +23,11 @@
   font-family: "Sk-Modernist-Mono";
 }
 
+.convertation-title img {
+  width: 30px;
+  height: 30px;
+}
+
 .dropdown-wrapper {
   margin-top: 10px;
 }

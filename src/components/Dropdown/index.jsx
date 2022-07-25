@@ -4,7 +4,41 @@ import classesCustom from "./custom.module.css";
 import Polygon from "../../assets/png/polygon.png";
 import ArrowBottom from "../../assets/png/arrow-bottom.png";
 
-const Common = ({ defaultValue, getValue, options }) => {
+const Common = ({ defaultValue, unknownNetwork, chainId, getValue }) => {
+  const logos = {
+    0: "https://e7.pngegg.com/pngimages/1022/1019/png-clipart-question-mark-logo-question-mark-in-circle-icons-logos-emojis-question-marks.png",
+    1: "https://ethereum.org/static/6b935ac0e6194247347855dc3d328e83/81d9f/eth-diamond-black.webp",
+    25: "https://cronoscan.com/token/images/cryptocom_32.png",
+    56: "https://crypto-central.io/library/uploads/BNB-300x300.png",
+    137: "https://cloudfront-us-east-1.images.arcpublishing.com/coindesk/DPYBKVZG55EWFHIK2TVT3HTH7Y.png",
+    43114: "https://cryptologos.cc/logos/avalanche-avax-logo.png",
+  };
+  const options = {
+    1: "Ethereum Mainnet",
+    25: "Cronos Mainnet",
+    56: "Binance Smart Chain",
+    137: "Polygon Mainnet",
+    43114: "Avalanche Mainnet",
+  };
+
+  function toHex(d) {
+    return "0x" + Number(d).toString(16);
+  }
+
+  const changeChain = async (e) => {
+    let token = Object.values(options).findIndex((el) => el === e);
+    let chain = Object.keys(options)[token];
+    console.log(chainId, chain, token, toHex(chain));
+
+    if (Number(chainId) !== Number(chain)) {
+      console.log("change chain");
+      await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: toHex(chain) }],
+      });
+    }
+  };
+
   const [value, setValue] = useState(
     defaultValue || { label: "", value: "", icon: "" }
   );
@@ -19,6 +53,7 @@ const Common = ({ defaultValue, getValue, options }) => {
   };
 
   const chooseNewOption = (option) => {
+    console.log(option);
     setValue(option);
     setIsOptionsOpen(false);
   };
@@ -29,20 +64,23 @@ const Common = ({ defaultValue, getValue, options }) => {
         onClick={toggleOptions}
         className={classesIndex["dropdown-value-container"]}
       >
-        <img src={value.icon} alt="icon" />
-        <p>{value.label}</p>
+        <img
+          src={unknownNetwork ? logos[0] : logos[chainId]}
+          alt="chain logo"
+        />
+        <p>{unknownNetwork ? "Unknown Network" : options[chainId]}</p>
         <div className={classesIndex["dropdown-arrow"]}>
           <img src={Polygon} alt="arrow" />
         </div>
       </div>
       {isOptionsOpen && (
         <div className={classesIndex["dropdown-options-container"]}>
-          {options.map((option) => (
+          {Object.values(options).map((option) => (
             <div
               key={`--option-${option.value}-${option.icon}`}
-              onClick={() => chooseNewOption(option)}
+              onClick={() => changeChain(option)}
             >
-              {option.label}
+              {option}
             </div>
           ))}
         </div>
@@ -51,7 +89,13 @@ const Common = ({ defaultValue, getValue, options }) => {
   );
 };
 
-const Custom = ({ defaultValue, getValue, options }) => {
+const Custom = ({
+  defaultValue,
+  getValue,
+  chainId,
+  options,
+  dropdownHandler,
+}) => {
   const [value, setValue] = useState(defaultValue || { label: "", value: "" });
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
 
@@ -68,6 +112,7 @@ const Custom = ({ defaultValue, getValue, options }) => {
   };
 
   const chooseNewOption = (option) => {
+    dropdownHandler({ value: option });
     setValue(option);
     setIsOptionsOpen(false);
   };
@@ -78,7 +123,7 @@ const Custom = ({ defaultValue, getValue, options }) => {
         onClick={toggleOptions}
         className={classesCustom["dropdown-value-container"]}
       >
-        <p>{value.label}</p>
+        <p>{value}</p>
         <div className={classesCustom["dropdown-arrow"]}>
           <img src={ArrowBottom} alt="arrow" />
         </div>
@@ -87,10 +132,10 @@ const Custom = ({ defaultValue, getValue, options }) => {
         <div className={classesIndex["dropdown-options-container"]}>
           {options.map((option) => (
             <div
-              key={`--option-${option.value}-${option.icon}`}
+              key={`--option-${option}`}
               onClick={() => chooseNewOption(option)}
             >
-              {option.label}
+              {option}
             </div>
           ))}
         </div>

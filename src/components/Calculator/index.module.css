@@ -167,6 +167,13 @@
 
   cursor: pointer;
 }
+.calc-button:disabled {
+  opacity: 0.5;
+}
+
+.calc-button:disabled:hover {
+  cursor: initial;
+}
 
 .calculator-dropdown {
   width: 350px;
