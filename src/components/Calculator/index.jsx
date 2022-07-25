@@ -420,7 +420,16 @@ const Calculator = ({
   return (
     <div className={classes["calculator-wrapper"]}>
       <div className={classes["calculator-dropdown"]}>
-        <Dropdown.Common unknownNetwork={unknownNetwork} chainId={chainId} />
+        {userAddress ? (
+          <Dropdown.Common unknownNetwork={unknownNetwork} chainId={chainId} />
+        ) : (
+          <button
+            className={classes["calc-button"]}
+            onClick={() => setIsShowWalletModal(true)}
+          >
+            Connect Wallet
+          </button>
+        )}
       </div>
       <div className={classes["calculator-container"]}>
         <div className={`${classes["left-side"]} ${classes["card-default"]}`}>
@@ -573,32 +582,30 @@ const Calculator = ({
             : "Connect Wallet"}
         </button>
       )} */}
-      <button
-        className={classes["calc-button"]}
-        disabled={unknownNetwork || isLoading}
-        onClick={
-          // userAddress ? handleSwap : () => setIsShowWalletModal(true)
-          userAddress
-            ? !isInputsReverted
+      {userAddress && (
+        <button
+          className={classes["calc-button"]}
+          disabled={unknownNetwork || isLoading}
+          onClick={
+            // userAddress ? handleSwap : () => setIsShowWalletModal(true)
+            !isInputsReverted
               ? tokenIn.isAllowed
                 ? handleSwap
                 : approveToken
               : tokenOut.isAllowed
               ? handleSwap
               : approveToken
-            : () => setIsShowWalletModal(true)
-        }
-      >
-        {userAddress
-          ? !isInputsReverted
+          }
+        >
+          {!isInputsReverted
             ? tokenIn.isAllowed
               ? "Swap"
               : "Approve Token"
             : tokenOut.isAllowed
             ? "Swap"
-            : "Approve Token"
-          : "Connect Wallet"}
-      </button>
+            : "Approve Token"}
+        </button>
+      )}
     </div>
   );
 };
