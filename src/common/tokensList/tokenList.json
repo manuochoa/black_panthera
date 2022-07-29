@@ -7,6 +7,13 @@
       "address": "0x0000000000000000000000000000000000000000",
       "decimals": 18,
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/1839.png"
+    }, {
+      "name": "TEDDY",
+      "selected": true,
+      "symbol": "TEDDY",
+      "address": "0x10f6f2b97F3aB29583D9D38BaBF2994dF7220C21",
+      "decimals": 18,
+      "logoURI": "https://bscscan.com/token/images/teddydoge_32.png"
     },
     {
       "address": "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
